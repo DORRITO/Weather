@@ -25,7 +25,7 @@ class Weather extends React.Component {
             //coordinates
             var lon = position.coords.longitude;
             var lat = position.coords.latitude; 
-            var api = "http://api.openweathermap.org/data/2.5/weather?lat=" + lat + "&lon=" + lon + "&appid=2c932966f6214d928f480ab04a2e75b2";
+            var api = "https://api.openweathermap.org/data/2.5/weather?lat=" + lat + "&lon=" + lon + "&appid=2c932966f6214d928f480ab04a2e75b2";
             // this.setState({weatherRes: res})
             this.callAPI(api)
                 .then(res => {
