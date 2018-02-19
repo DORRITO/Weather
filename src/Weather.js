@@ -25,7 +25,7 @@ class Weather extends React.Component {
             //coordinates
             var lon = position.coords.longitude;
             var lat = position.coords.latitude; 
-            var api = `http://api.apixu.com/v1/current.json?key=4f1825ef1bd4496b94c231250181802&q=${lat},${lon}`;
+            var api = `https://api.apixu.com/v1/current.json?key=4f1825ef1bd4496b94c231250181802&q=${lat},${lon}`;
             
             this.callAPI(api)
                 .then(res => {
