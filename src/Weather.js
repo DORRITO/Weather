@@ -13,7 +13,7 @@ class Weather extends React.Component {
             cTemp: '',
             location: '',
             country: '',
-            description: '',
+            condition: '',
             rain: false,
             background: ''
         };
@@ -25,18 +25,17 @@ class Weather extends React.Component {
             //coordinates
             var lon = position.coords.longitude;
             var lat = position.coords.latitude; 
-            var api = "https://api.openweathermap.org/data/2.5/weather?lat=" + lat + "&lon=" + lon + "&appid=2c932966f6214d928f480ab04a2e75b2";
-            // this.setState({weatherRes: res})
+            var api = `http://api.apixu.com/v1/current.json?key=4f1825ef1bd4496b94c231250181802&q=${lat},${lon}`;
+            
             this.callAPI(api)
                 .then(res => {
-                    let kTemp = res.main.temp;
-                    let fTemp = (kTemp * (9/5) - 459.67);
-                    let cTemp = (kTemp - 273.15);
-                    let country = res.sys.country;
-                    let location = res.name;
-                    let description = res.weather[0].description;
-                    let rain = res.weather[0].main === 'Rain'|| res.weather[0].main === 'Drizzle'|| res.weather[0].main === 'Thunderstorm';
-                    this.setState({weather: fTemp.toFixed(1) + '°F', cTemp: cTemp.toFixed(1) + '°C', location, country, description, rain});
+                    let fTemp = res.current.temp_f;
+                    let cTemp = res.current.temp_c;
+                    let country = res.location.country;
+                    let location = res.location.region;
+                    let condition = res.current.condition.text;
+                    let rain = res.current.condition.text.includes('rain') || res.current.condition.text.includes('drizzle')|| res.current.condition.text.includes('sleet');
+                    this.setState({weather: fTemp + '°F', cTemp: cTemp + '°C', location, country, condition, rain});
 
                     if(fTemp >= 95){
                         this.setState({background: 'App-Hot'});
@@ -68,8 +67,8 @@ class Weather extends React.Component {
             <Grid.Row centered>
                 <Grid.Column textAlign='center'>
                     <h1 className='Decoration'>{this.state.weather}</h1>
-                    <h2 className='Decoration'>{this.state.description ? this.state.description : ''}</h2>
-                    <h2 className='Decoration'>{this.state.location ? `In ${this.state.location}, ${this.state.country}` : ''}</h2>
+                    <h2 className='Decoration'>{this.state.condition ? this.state.condition : ''}</h2>
+                    <h2 className='Decoration'>{this.state.location ? `At your location in ${this.state.location}` : ''}</h2>
                 </Grid.Column>
             </Grid.Row>
             </Segment>
