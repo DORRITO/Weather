@@ -24,7 +24,7 @@ class Weather extends React.Component {
         navigator.geolocation.getCurrentPosition((position) => {
             //coordinates
             var lon = position.coords.longitude;
-            var lat = position.coords.latitude; 
+            var lat = position.coords.latitude;
             var api = `https://api.apixu.com/v1/current.json?key=4f1825ef1bd4496b94c231250181802&q=${lat},${lon}`;
             
             this.callAPI(api)
@@ -46,7 +46,12 @@ class Weather extends React.Component {
                     }
                 })
                 .catch(err => console.log(err));
-        });
+        },
+        (error) => {
+            console.log(error)
+          },
+        {enableHighAccuracy: true, timeout: 20000, maximumAge: 10000}
+    )
     }//*********************************************************************
 
     /////////////////////////////////////////////
